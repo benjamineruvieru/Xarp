@@ -5,7 +5,11 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Colors from './source/constants/Colors';
 import StackNav from './source/navigation/StackNav';
+import firestore from '@react-native-firebase/firestore';
 
+firestore().settings({
+  persistence: false,
+});
 LogBox.ignoreLogs(['Require cycle: node_modules/rn-fetch-blob/index.js']);
 StatusBar.setBarStyle('light-content');
 Platform.OS === 'android' && StatusBar.setBackgroundColor(Colors.bgMain);

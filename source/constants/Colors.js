@@ -1,5 +1,6 @@
 export default {
   primary: '#5C6BC0',
+  primaryDark: '#3a4896',
   black: '#000',
   white: 'white',
   grey: '#51617c',
@@ -18,4 +19,5 @@ export default {
   faintgrey: '#D9D9D9',
   bgMain: '#0C0F15',
   bgLighter: '#293243',
+  otherDarker: '#0c0f14',
 };

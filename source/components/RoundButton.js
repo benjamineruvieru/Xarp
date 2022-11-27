@@ -5,8 +5,8 @@ import {getPercentWidth} from '../../source/utilis/Functions';
 const RoundButton = props => {
   const styles = StyleSheet.create({
     button: {
-      width: getPercentWidth(15),
-      height: getPercentWidth(15),
+      width: getPercentWidth(14),
+      height: getPercentWidth(14),
       backgroundColor: props.color,
       borderRadius: 360,
       justifyContent: 'center',

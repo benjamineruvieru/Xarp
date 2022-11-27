@@ -6,7 +6,7 @@ const Text = ({children, color = 'white', style, size, numLines}) => {
     text: {
       fontFamily: 'Poppins-Medium',
       color: color,
-      fontSize: size === 'small' ? 11 : size === 'title' ? 18 : 13,
+      fontSize: size === 'small' ? 10 : size === 'title' ? 18 : 13,
       ...style,
     },
   });

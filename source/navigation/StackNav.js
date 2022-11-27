@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import React from 'react';
 import {
   createStackNavigator,
@@ -6,21 +6,33 @@ import {
 } from '@react-navigation/stack';
 import StartChat from '../features/onboarding/StartChat';
 import ChatScreen from '../features/chat/ChatScreen';
+import Gallery from '../features/extras/Gallery';
+import SendMedia from '../features/extras/SendMedia';
+
 const Stack = createStackNavigator();
 
 const StackNav = () => {
   return (
-    <Stack.Navigator
-      initialRouteName={'StartChat'}
-      screenOptions={{
-        headerShown: false,
-        animationEnabled: true,
-        gestureEnabled: true,
-        gestureDirection: 'horizontal',
-        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-      }}>
-      <Stack.Screen name="ChatScreen" component={ChatScreen} />
-      <Stack.Screen name="StartChat" component={StartChat} />
+    <Stack.Navigator initialRouteName={'StartChat'}>
+      <Stack.Group
+        screenOptions={{
+          headerShown: false,
+          animationEnabled: true,
+          gestureEnabled: true,
+          gestureDirection: 'horizontal',
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}>
+        <Stack.Screen name="ChatScreen" component={ChatScreen} />
+        <Stack.Screen name="StartChat" component={StartChat} />
+        <Stack.Screen name="SendMedia" component={SendMedia} />
+      </Stack.Group>
+      <Stack.Group
+        screenOptions={{
+          presentation: 'modal',
+          header: () => null,
+        }}>
+        <Stack.Screen name="Gallery" component={Gallery} />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };
