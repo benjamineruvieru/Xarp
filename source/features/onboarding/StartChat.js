@@ -25,6 +25,7 @@ import {useNavigation} from '@react-navigation/native';
 import {deleteItem, getItem, setItem} from '../../utilis/storage';
 import DropdownAlert from 'react-native-dropdownalert';
 import firestore from '@react-native-firebase/firestore';
+import {useMMKVString} from 'react-native-mmkv';
 
 const Top = ({openSheet}) => {
   const inset = useSafeAreaInsets();
@@ -59,7 +60,7 @@ const Top = ({openSheet}) => {
   );
 };
 
-const Settings = ({Notify}) => {
+const Settings = ({Notify, closeSheet}) => {
   const navigation = useNavigation();
   const [username, setUsername] = useState(getItem('username'));
   const [password, setPassword] = useState(null);
@@ -78,8 +79,13 @@ const Settings = ({Notify}) => {
       } else {
         writeUsername(username);
         setItem('username', username);
+        closeSheet();
         setUsername();
-        Notify('success', 'Success', 'Username saved successfully');
+        Notify(
+          'success',
+          'Username saved successfully',
+          'You can now share your username with others to allow them connect to your chat',
+        );
       }
     }
   };
@@ -187,7 +193,7 @@ const JoinSpace = ({Notify, closeJoinSheet, openSheet}) => {
   const [load, setLoad] = useState(false);
   const [load2, setLoad2] = useState(false);
 
-  const username = getItem('username');
+  const [username] = useMMKVString('username');
 
   const checkIfUserExists = async user => {
     const channelDoc = firestore().collection('Channels').doc(user);
@@ -354,6 +360,10 @@ const StartChat = ({navigation}) => {
     modalizeRefJoin.current?.open();
   };
 
+  const closeSheet = () => {
+    modalizeRef.current?.close();
+  };
+
   const validate = () => {
     const username = getItem('username');
 
@@ -402,7 +412,7 @@ const StartChat = ({navigation}) => {
         modalStyle={styles.sheet}
         ref={modalizeRef}
         modalHeight={getPercentHeight(55)}>
-        <Settings Notify={Notify} />
+        <Settings closeSheet={closeSheet} Notify={Notify} />
       </Modalize>
       <Modalize
         handleStyle={{backgroundColor: 'white'}}

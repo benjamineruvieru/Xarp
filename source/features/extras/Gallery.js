@@ -4,6 +4,7 @@ import {
   Pressable,
   Image,
   TouchableOpacity,
+  Linking,
 } from 'react-native';
 import React, {useEffect, useState, useCallback} from 'react';
 import Colors from '../../constants/Colors';
@@ -158,6 +159,18 @@ const Gallery = ({navigation, route}) => {
       </Pressable>
     );
   };
+
+  MediaLibrary.getPermissionsAsync()
+    .then(async res => {
+      if (!res.canAskAgain || res.status === 'denied') {
+        Linking.openSettings();
+      } else if (!res.granted) {
+        await MediaLibrary.requestPermissionsAsync();
+      }
+    })
+
+    .then(res => {});
+
   return (
     <View style={styles.container}>
       <View

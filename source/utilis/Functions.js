@@ -1,4 +1,4 @@
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../oldsource/constants/Variables';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../constants/Variables';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 

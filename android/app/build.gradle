@@ -262,9 +262,9 @@ compileOptions {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 implementation project(':react-native-fs')
+implementation "androidx.core:core-splashscreen:1.0.0" 
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
-implementation project(':react-native-video-processing')
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {

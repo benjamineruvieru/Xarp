@@ -6,13 +6,18 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Colors from './source/constants/Colors';
 import StackNav from './source/navigation/StackNav';
 import firestore from '@react-native-firebase/firestore';
+import RNBootSplash from 'react-native-bootsplash';
 
 firestore().settings({
   persistence: false,
 });
-LogBox.ignoreLogs(['Require cycle: node_modules/rn-fetch-blob/index.js']);
 StatusBar.setBarStyle('light-content');
+
+LogBox.ignoreLogs(['Require cycle: node_modules/rn-fetch-blob/index.js']);
+
 Platform.OS === 'android' && StatusBar.setBackgroundColor(Colors.bgMain);
+
+RNBootSplash.hide({fade: true});
 const App = () => {
   return (
     <NavigationContainer>

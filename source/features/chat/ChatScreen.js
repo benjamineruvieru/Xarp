@@ -930,18 +930,7 @@ const ChatScreen = ({route, navigation}) => {
               <View
                 style={{
                   flex: 1,
-                  justifyContent: 'center',
-                  paddingTop: 35,
-                }}>
-                {!user && (
-                  <Text
-                    style={{textAlign: 'center', marginHorizontal: 20}}
-                    size={'small'}>
-                    Share your username with others to allow them connect to
-                    your space
-                  </Text>
-                )}
-              </View>
+                }}></View>
               <WaitSvg width={SCREEN_WIDTH / 1.5} height={SCREEN_WIDTH / 1.5} />
               <Text>{state.status}</Text>
               <ActivityIndicator color={'white'} style={{marginTop: 10}} />
@@ -952,7 +941,7 @@ const ChatScreen = ({route, navigation}) => {
                 }}>
                 {!user && (
                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Text size={'small'}>Allow random users join</Text>
+                    <Text size={'small'}>Allow random users to join</Text>
                     <Switch
                       style={{
                         transform: [
