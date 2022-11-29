@@ -9,25 +9,10 @@ export const getPercentWidth = percent => {
   return (percent / 100) * SCREEN_WIDTH;
 };
 
-export const spawn = () => {
-  const x = Math.floor(Math.random() * (250 - 50 + 1) + 20);
-  const y = Math.floor(Math.random() * (400 - 300 - 70 + 1) + 70);
-  return {x, y};
-};
-
 export const writeUsername = username => {
-  firestore()
-    .collection('Usernames')
-    .doc(username)
-    .set({
-      username: username,
-    })
-    .then(() => {
-      //console.log('User added!');
-    })
-    .catch(error => {
-      //console.log(error);
-    });
+  firestore().collection('Usernames').doc(username).set({
+    username: username,
+  });
 };
 
 export const userNameExists = async username => {
@@ -47,7 +32,34 @@ export const UploadPhoto = async (
     const url = await storage()
       .ref(`/profilepic/${username}/profile.png`)
       .getDownloadURL();
-
     callBack(url);
   });
 };
+
+export function formatBytes(bytes, decimals = 2) {
+  if (!+bytes) return '0 Bytes';
+
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+}
+
+export const seperateExt = name => {
+  if (name.includes('.')) {
+    const data = name.split('.');
+    let ext = '.' + data.pop();
+    let filename = data.join('.');
+    return {
+      filename,
+      ext,
+    };
+  }
+};
+
+export function randomIntFromInterval(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}

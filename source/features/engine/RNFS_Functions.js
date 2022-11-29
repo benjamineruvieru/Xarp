@@ -1,52 +1,8 @@
 import {Platform} from 'react-native';
 import RNFS from 'react-native-fs';
-
-export const writeFileStream = ({base64, name}) => {
-  let path;
-  if (Platform.OS === 'android') {
-    path =
-      RNFS.ExternalStorageDirectoryPath + '/Xarp Spaces/Received Files/' + name;
-  } else {
-    path = RNFS.DocumentDirectoryPath + '/' + name;
-  }
-
-  return RNFS.write(path, base64, -1, 'base64');
-};
-
-export const readFileStream = ({
-  position = 0,
-  path,
-  name,
-  sendMessage,
-  size,
-  dispatch,
-}) => {
-  console.log(path);
-  try {
-    RNFS.read(path, 150000, position, 'base64').then(async base64 => {
-      if (base64) {
-        dispatch({
-          type: 'updateProgress',
-          name,
-          position,
-          size,
-        });
-
-        const message = {
-          action: 'chunk',
-          message: {base64, name, position, path, size},
-        };
-        sendMessage(message);
-      } else {
-        console.log('finished');
-      }
-    });
-  } catch (err) {
-    console.error('Read Err', err);
-  }
-};
-
-export const confirmSpace = async fileSize => {
+import {formatBytes, seperateExt} from '../../utilis/Functions';
+import {PermissionsAndroid} from 'react-native';
+const confirmSpace = async fileSize => {
   const space = await RNFS.getFSInfo();
   if (space.freeSpace > fileSize) {
     return Promise.resolve(true);
@@ -55,7 +11,7 @@ export const confirmSpace = async fileSize => {
   }
 };
 
-export const checkIfExist = async ({name, ext, pos = 0, callBack}) => {
+const checkIfExist = async ({name, ext, pos = 0, callBack}) => {
   let path;
   let checkname = name;
   if (pos > 0) {
@@ -68,7 +24,7 @@ export const checkIfExist = async ({name, ext, pos = 0, callBack}) => {
       checkname +
       ext;
   } else {
-    path = RNFS.DocumentDirectoryPath + '/' + checkname + ext;
+    path = RNFS.DocumentDirectoryPath + '/Received Files/' + checkname + ext;
   }
 
   const exist = await RNFS.exists(path);
@@ -88,33 +44,19 @@ export const checkIfExist = async ({name, ext, pos = 0, callBack}) => {
   }
 };
 
-const seperateExt = name => {
-  if (name.includes('.')) {
-    const data = name.split('.');
-    let ext = '.' + data.pop();
-    let filename = data.join('.');
-    console.log(ext);
-    console.log(filename);
-    return {
-      filename,
-      ext,
-    };
-  }
+const initFileTransfer = ({path, size, sendMessage, name}) => {
+  const message = {
+    action: 'initFileTransfer',
+    message: {
+      name,
+      size,
+      path,
+    },
+  };
+  sendMessage(message);
 };
 
-function formatBytes(bytes, decimals = 2) {
-  if (!+bytes) return '0 Bytes';
-
-  const k = 1024;
-  const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
-}
-
-export const initTransfer = async ({name, size, sendMessage, path}) => {
+const getDetails = async ({name, size, sendMessage, path}) => {
   const spaceAvaliable = await confirmSpace(size);
   const {filename, ext} = seperateExt(name);
 
@@ -126,7 +68,7 @@ export const initTransfer = async ({name, size, sendMessage, path}) => {
         '/Xarp Spaces/Received Files/' +
         name;
     } else {
-      receiverPath = RNFS.DocumentDirectoryPath + '/' + name;
+      receiverPath = RNFS.DocumentDirectoryPath + '/Received Files/' + name;
     }
     const msg = {
       message: name,
@@ -164,14 +106,54 @@ export const initTransfer = async ({name, size, sendMessage, path}) => {
   }
 };
 
-export const sendFile = ({path, size, sendMessage, name}) => {
-  const message = {
-    action: 'initTransfer',
-    message: {
-      name,
-      size,
-      path,
-    },
-  };
-  sendMessage(message);
+const readFileStream = ({
+  position = 0,
+  path,
+  name,
+  sendMessage,
+  size,
+  dispatch,
+}) => {
+  try {
+    RNFS.read(path, 150000, position, 'base64').then(async base64 => {
+      if (base64) {
+        const message = {
+          action: 'chunk',
+          message: {base64, name, position, path, size},
+        };
+        sendMessage(message);
+        dispatch({
+          type: 'updateProgress',
+          name,
+          position,
+          size,
+        });
+      }
+    });
+  } catch (err) {
+    console.error('Read Err', err);
+  }
 };
+
+const writeFileStream = ({base64, name}) => {
+  let path;
+  if (Platform.OS === 'android') {
+    PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+    );
+    path =
+      RNFS.ExternalStorageDirectoryPath + '/Xarp Spaces/Received Files/' + name;
+  } else {
+    path = RNFS.DocumentDirectoryPath + '/Received Files/' + name;
+  }
+  return RNFS.write(path, base64, -1, 'base64');
+};
+
+const RNFS_Functions = {
+  initFileTransfer,
+  getDetails,
+  readFileStream,
+  writeFileStream,
+};
+
+export default RNFS_Functions;

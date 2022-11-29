@@ -68,14 +68,11 @@ const SendMedia = ({navigation}) => {
 
   useEffect(() => {
     if (Platform.OS === 'ios' && state.mediaType === 'video') {
-      console.log('getting');
       RNConvertPhAsset.convertVideoFromUrl({
         url: state.uri,
         convertTo: 'mov',
         quality: 'high',
       }).then(response => {
-        console.log(response);
-
         dispatch({
           type: 'change_videouri',
           newUri: response.path,
@@ -91,7 +88,6 @@ const SendMedia = ({navigation}) => {
   }, [state.finalVideoUrl]);
 
   const generateThumbnail = async timeStamp => {
-    console.log(timeStamp);
     const response = await createThumbnail({
       url: state.finalVideoUrl,
       timeStamp: timeStamp,
@@ -155,10 +151,8 @@ const SendMedia = ({navigation}) => {
             }}
             repeat={true}
             onProgress={progress => {
-              console.log(progress);
               const num = progress.seekableDuration / progress.currentTime;
               const seekLength = SCREEN_WIDTH - 120;
-              console.log(seekLength / num);
               setProgress(seekLength / num);
             }}
           />

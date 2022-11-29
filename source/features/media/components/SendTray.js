@@ -60,7 +60,6 @@ const SendTray = ({thumbList, progress, type, dispatch, state}) => {
   //     }
   //   })
   //   .onEnd(() => {
-  //     console.log(xL.value + startL.value);
   //     startL.value = xL.value;
   //   })
   //   .onFinalize(() => {});

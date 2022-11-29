@@ -64,3 +64,4 @@ buck-out/
 .env
 android/app/google-services.json
 GoogleService-Info.plist
+editted_packages

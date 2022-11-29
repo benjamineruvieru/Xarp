@@ -22,7 +22,7 @@ import InCallManager from 'react-native-incall-manager';
 import SpeakerSvg from '../../assets/svg/speaker.svg';
 import SpeakerOffSvg from '../../assets/svg/speakerOff.svg';
 
-const VideoCall = ({
+const CallScreen = ({
   localStream,
   chatname,
   img,
@@ -45,9 +45,7 @@ const VideoCall = ({
     try {
       const videoTrack = await localStream.getVideoTracks()[0];
       videoTrack._switchCamera();
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   const toggleVideo = () => {
@@ -66,9 +64,7 @@ const VideoCall = ({
         }
         return !prev;
       });
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   const toggleAudio = async () => {
@@ -77,7 +73,6 @@ const VideoCall = ({
       setIsMuted(prev => !prev);
     } catch (err) {
       // Handle Error
-      console.log(err);
     }
   };
 
@@ -87,14 +82,12 @@ const VideoCall = ({
       setIsSpeakerOn(prev => !prev);
     } catch (err) {
       // Handle Error
-      console.log(err);
     }
   };
 
   useEffect(() => {
     if (answered) {
       if (isVoiceCall) {
-        console.log('cale');
         setTime('00:00');
         var date = new Date(0);
         let sec = 0;
@@ -434,7 +427,6 @@ const VideoCall = ({
               resizeMode="contain"
               source={require('../../assets/images/profile.png')}
               style={{
-                //  position: 'absolute',
                 width: '100%',
                 height: '100%',
                 backgroundColor: '#BABABA',
@@ -447,4 +439,4 @@ const VideoCall = ({
   );
 };
 
-export default VideoCall;
+export default CallScreen;

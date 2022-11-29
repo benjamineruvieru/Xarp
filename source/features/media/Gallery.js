@@ -67,12 +67,6 @@ const Gallery = ({navigation, route}) => {
     [photos],
   );
 
-  useEffect(() => {
-    if (photos.length < 1) {
-      loadNextPagePictures();
-    }
-  }, [loadNextPagePictures, photos]);
-
   const startEditting = () => {
     navigation.navigate('SendMedia', list);
   };
@@ -160,16 +154,28 @@ const Gallery = ({navigation, route}) => {
     );
   };
 
-  MediaLibrary.getPermissionsAsync()
-    .then(async res => {
-      if (!res.canAskAgain || res.status === 'denied') {
-        Linking.openSettings();
-      } else if (!res.granted) {
-        await MediaLibrary.requestPermissionsAsync();
-      }
-    })
+  const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
 
-    .then(res => {});
+  MediaLibrary.getPermissionsAsync().then(async res => {
+    if (!res.canAskAgain || res.status === 'denied') {
+      Linking.openSettings();
+    } else if (!res.granted) {
+      const res = await MediaLibrary.requestPermissionsAsync();
+      if (!res.granted) {
+        loadNextPagePictures();
+      } else {
+        navigation.goBack();
+      }
+    }
+  });
+
+  useEffect(() => {
+    if (permissionResponse?.granted) {
+      if (photos.length < 1) {
+        loadNextPagePictures();
+      }
+    }
+  }, [loadNextPagePictures, photos, permissionResponse]);
 
   return (
     <View style={styles.container}>

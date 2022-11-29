@@ -1,4 +1,4 @@
-import {Platform, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import React from 'react';
 import {
   createStackNavigator,
@@ -6,8 +6,8 @@ import {
 } from '@react-navigation/stack';
 import StartChat from '../features/onboarding/StartChat';
 import ChatScreen from '../features/chat/ChatScreen';
-import Gallery from '../features/extras/Gallery';
-import SendMedia from '../features/extras/SendMedia';
+import Gallery from '../features/media/Gallery';
+import SendMedia from '../features/media/SendMedia';
 
 const Stack = createStackNavigator();
 

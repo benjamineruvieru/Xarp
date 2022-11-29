@@ -1,23 +1,30 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import {LogBox, Platform, StatusBar} from 'react-native';
+import {PermissionsAndroid, Platform, StatusBar} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Colors from './source/constants/Colors';
 import StackNav from './source/navigation/StackNav';
 import firestore from '@react-native-firebase/firestore';
 import RNBootSplash from 'react-native-bootsplash';
+import RNFS from 'react-native-fs';
 
 firestore().settings({
   persistence: false,
 });
 StatusBar.setBarStyle('light-content');
 
-LogBox.ignoreLogs(['Require cycle: node_modules/rn-fetch-blob/index.js']);
-
 Platform.OS === 'android' && StatusBar.setBackgroundColor(Colors.bgMain);
 
 RNBootSplash.hide({fade: true});
+if (Platform.OS === 'ios') {
+  RNFS.mkdir(RNFS.DocumentDirectoryPath + '/Received Files', {
+    NSURLIsExcludedFromBackupKey: false,
+  });
+} else {
+  PermissionsAndroid.request(
+    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+  );
+}
 const App = () => {
   return (
     <NavigationContainer>
