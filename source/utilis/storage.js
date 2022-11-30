@@ -20,3 +20,19 @@ export const getItem = (key, shouldParse) => {
 export const deleteItem = key => {
   storage.delete(key);
 };
+
+export const addValueListener = callBack => {
+  const listener = storage.addOnValueChangedListener(key => {
+    const newValue = getItem(key, true);
+    if (newValue) {
+      callBack({value: newValue, key});
+    }
+  });
+
+  return {listener};
+};
+
+export const saveIce = (key, ice) => {
+  const prevIce = getItem(key, true);
+  setItem(key, [...prevIce, ice], true);
+};

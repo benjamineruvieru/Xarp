@@ -5,7 +5,7 @@ import {
   StatusBar,
   KeyboardAvoidingView,
 } from 'react-native';
-import React, {useRef, useEffect, useReducer} from 'react';
+import React, {useRef, useEffect, useReducer, useState} from 'react';
 import WebRTCFunctions from '../engine/WebRTC_Functions';
 import RNFS_Functions from '../engine/RNFS_Functions';
 import Colors from '../../constants/Colors';
@@ -19,6 +19,7 @@ import {ChatBody} from './components/ChatBody';
 import {ChatBottom} from './components/ChatBottom';
 import WaitingScreen from './WaitingScreen';
 import {reducer} from './reducer';
+import BackgroundTimer from 'react-native-background-timer';
 
 const ChatScreen = ({route, navigation}) => {
   const [state, dispatch] = useReducer(reducer, {
@@ -57,7 +58,7 @@ const ChatScreen = ({route, navigation}) => {
         type: 'change_status',
         status: 'Establishing Connection...',
       });
-      WebRTCFunctions.joinChat({
+      var unsubcribeJoin = WebRTCFunctions.joinChat({
         pc,
         handleReceiveMessage,
         sendChannel,
@@ -66,18 +67,20 @@ const ChatScreen = ({route, navigation}) => {
     } else {
       dispatch({
         type: 'change_status',
-        status: 'Waiting for user to connect...',
+        status: 'Creating Chat...',
       });
 
-      WebRTCFunctions.startChat({
+      var unsubcribeStart = WebRTCFunctions.startChat({
         handleReceiveMessage,
         pc,
         sendChannel,
         username,
+        dispatch,
       });
     }
 
     pc.current.onconnectionstatechange = async state => {
+      console.log(pc.current.connectionState);
       if (pc.current.connectionState === 'failed') {
         endCall();
         navigation.replace('StartChat');
@@ -97,9 +100,16 @@ const ChatScreen = ({route, navigation}) => {
               : null,
           },
         };
+        sendDetails(message);
+
         setTimeout(() => {
-          sendMessage(message);
-        }, 500);
+          const channelDoc = firestore().collection('Channels').doc(username);
+          channelDoc.get().then(d => {
+            if (d.exists) {
+              channelDoc.delete();
+            }
+          });
+        }, 30000);
       } else if (pc.current.connectionState === 'connecting') {
         dispatch({
           type: 'change_status',
@@ -108,6 +118,18 @@ const ChatScreen = ({route, navigation}) => {
       }
     };
   }, []);
+
+  const sendDetails = message => {
+    if (sendChannel?.current) {
+      setTimeout(() => {
+        sendMessage(message);
+      }, 500);
+    } else {
+      setTimeout(() => {
+        sendDetails(message);
+      }, 500);
+    }
+  };
 
   function handleReceiveMessage(e) {
     const data = JSON.parse(e.data);
@@ -159,6 +181,7 @@ const ChatScreen = ({route, navigation}) => {
         break;
       case 'offer':
         InCallManager.startRingtone('_BUNDLE_');
+
         dispatch({
           type: 'isReceivingCall',
           offer: data.message.offer,
@@ -185,6 +208,7 @@ const ChatScreen = ({route, navigation}) => {
         }
         break;
       case 'answer':
+        startTimer();
         InCallManager.stopRingback();
         WebRTCFunctions.receiveAnswer({pcCall, answer: data.message});
         dispatch({
@@ -216,17 +240,17 @@ const ChatScreen = ({route, navigation}) => {
         });
         break;
       case 'newIce':
-        dispatch({
-          type: 'newIce',
-          ice: data.message,
-        });
+        if (state.answered) {
+          pcCall.current.addIceCandidate(new RTCIceCandidate(data.message));
+        } else {
+          dispatch({
+            type: 'newIce',
+            ice: data.message,
+          });
+        }
         break;
       case 'newIceAns':
         pcCall.current.addIceCandidate(new RTCIceCandidate(data.message));
-        dispatch({
-          type: 'newIceAns',
-          ice: data.message,
-        });
         break;
     }
   }
@@ -259,7 +283,29 @@ const ChatScreen = ({route, navigation}) => {
       isVoiceCall: true,
     });
   };
+
+  const [time, setTime] = useState('00:00:00');
+
+  const startTimer = () => {
+    setTime('00:00:00');
+
+    let sec = 0;
+    BackgroundTimer.runBackgroundTimer(() => {
+      sec += 1;
+      let hours = Math.floor(sec / 3600);
+      let minutes = Math.floor(sec / 60);
+      let seconds = sec % 60;
+      minutes = String(minutes).padStart(2, '0');
+      hours = String(hours).padStart(2, '0');
+      seconds = String(seconds).padStart(2, '0');
+      let timeString = hours + ':' + minutes + ':' + seconds;
+      setTime(timeString);
+    }, 1000);
+  };
+
   const answerCall = isVoiceCall => {
+    startTimer();
+
     InCallManager.stopRingtone();
 
     InCallManager.start({media: isVoiceCall ? 'audio' : 'video'});
@@ -304,6 +350,7 @@ const ChatScreen = ({route, navigation}) => {
           remoteStream={state.remoteStream}
           isReceivingCall={state.isReceivingCall}
           answered={state.answered}
+          time={time}
         />
       ) : (
         <>
@@ -315,7 +362,7 @@ const ChatScreen = ({route, navigation}) => {
             />
           ) : (
             <KeyboardAvoidingView
-              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              behavior={Platform.OS === 'ios' && 'padding'}
               style={styles.container}>
               <StatusBar backgroundColor={'transparent'} translucent={true} />
               <ChatHead

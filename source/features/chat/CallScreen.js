@@ -35,12 +35,12 @@ const CallScreen = ({
   answered,
   isParticipantVideoOn,
   pcCall,
+  time,
 }) => {
   const [videoOn, setVideoOn] = useState(!isVoiceCall);
   const [isMuted, setIsMuted] = useState(false);
   const [isSpeakerOn, setIsSpeakerOn] = useState(false);
   const [isMainView, setisMainView] = useState(true);
-  const [time, setTime] = useState('00:00');
   const switchCam = async () => {
     try {
       const videoTrack = await localStream.getVideoTracks()[0];
@@ -88,20 +88,10 @@ const CallScreen = ({
   useEffect(() => {
     if (answered) {
       if (isVoiceCall) {
-        setTime('00:00');
-        var date = new Date(0);
-        let sec = 0;
-        var interval = setInterval(() => {
-          sec += 1;
-          date.setSeconds(sec);
-          var timeString = date.toISOString().substring(14, 19);
-          setTime(timeString);
-        }, 1000);
       } else {
         setisMainView(false);
       }
     }
-    return () => clearInterval(interval);
   }, [answered]);
 
   const insets = useSafeAreaInsets();
@@ -310,7 +300,11 @@ const CallScreen = ({
       )}
       <View style={styles.tray}>
         {isReceivingCall && (
-          <RoundButton fun={() => answerCall(isVoiceCall)} color={'green'}>
+          <RoundButton
+            fun={() => {
+              answerCall(isVoiceCall);
+            }}
+            color={'green'}>
             <Icons
               type={IconsType.MaterialCommunityIcons}
               name={'phone'}

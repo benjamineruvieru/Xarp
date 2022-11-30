@@ -12,6 +12,7 @@ import {
   userNameExists,
   writeUsername,
   UploadPhoto,
+  deleteUsername,
 } from '../../../utilis/Functions';
 import {useNavigation} from '@react-navigation/native';
 import {deleteItem, getItem, setItem} from '../../../utilis/storage';
@@ -37,6 +38,9 @@ export const Settings = ({Notify, closeSheet}) => {
         );
         setLoad2(false);
       } else {
+        if (getItem('username')) {
+          deleteUsername(getItem('username'));
+        }
         writeUsername(username);
         setItem('username', username);
         closeSheet();

@@ -13,6 +13,7 @@ const servers = {
   iceServers: [
     {
       urls: [
+        'stun:eu-turn6.xirsys.com',
         'stun:stun1.l.google.com:19302',
         'stun:stun2.l.google.com:19302',
         'stun:stun.stunprotocol.org',
@@ -20,9 +21,27 @@ const servers = {
       ],
     },
     {
-      urls: 'turn:numb.viagenie.ca',
-      credential: 'muazkh',
-      username: 'webrtc@live.com',
+      username:
+        '0nkLsbb8wyjIaNU99WkK_tI-c1OFxV7vcxPQM9kwF_-X8JPb4u6hB0YgneGH4FMUAAAAAGOGTfRiZW5qYW1pbmVydXZpZXJ1',
+      credential: 'd197d1e4-7012-11ed-bfd1-0242ac140004',
+      urls: [
+        'turn:eu-turn6.xirsys.com:80?transport=udp',
+        'turn:eu-turn6.xirsys.com:3478?transport=udp',
+        'turn:eu-turn6.xirsys.com:80?transport=tcp',
+        'turn:eu-turn6.xirsys.com:3478?transport=tcp',
+        'turns:eu-turn6.xirsys.com:443?transport=tcp',
+        'turns:eu-turn6.xirsys.com:5349?transport=tcp',
+      ],
+    },
+    {
+      urls: 'turn:openrelay.metered.ca:80',
+      username: 'openrelayproject',
+      credential: 'openrelayproject',
+    },
+    {
+      urls: 'turn:openrelay.metered.ca:443',
+      username: 'openrelayproject',
+      credential: 'openrelayproject',
     },
   ],
   iceCandidatePoolSize: 10,
@@ -38,6 +57,7 @@ const mediaAVConstraints = {
 };
 const mediaAConstraints = {
   audio: true,
+  video: false,
 };
 
 export const startChat = async ({
@@ -45,6 +65,7 @@ export const startChat = async ({
   username,
   sendChannel,
   handleReceiveMessage,
+  dispatch,
 }) => {
   pc.current = new RTCPeerConnection(servers);
 
@@ -79,7 +100,12 @@ export const startChat = async ({
     type: offerDescription.type,
   };
 
-  await channelDoc.set({offer});
+  await channelDoc.set({offer}).then(() => {
+    dispatch({
+      type: 'change_status',
+      status: 'Waiting for user to connect...',
+    });
+  });
   const password = getItem('password');
   if (password) {
     channelDoc.update({
@@ -105,21 +131,10 @@ export const startChat = async ({
         await channelDoc.update({
           answerCandidates: firestore.FieldValue.arrayRemove(can),
         });
-      } else {
-        subscriber();
-      }
-    }
-    //Clear offer after connect
-    if (data?.answerCandidates && data?.offerCandidates) {
-      const can1 = data?.answerCandidates[0];
-      const can2 = data?.answerCandidates[0];
-      if (!can1 && !can2) {
-        setTimeout(() => {
-          channelDoc.delete();
-        }, 5000);
       }
     }
   });
+  return subscriber;
 };
 
 export const joinChat = async ({
@@ -165,7 +180,7 @@ export const joinChat = async ({
 
   await channelDoc.update({answer});
 
-  const subscriber = channelDoc.onSnapshot(async snapshot => {
+  channelDoc.onSnapshot(async snapshot => {
     const data = snapshot.data();
 
     if (data?.offerCandidates) {
@@ -175,8 +190,6 @@ export const joinChat = async ({
         await channelDoc.update({
           offerCandidates: firestore.FieldValue.arrayRemove(can),
         });
-      } else {
-        subscriber();
       }
     }
   });
@@ -184,6 +197,7 @@ export const joinChat = async ({
 
 export const prepareToAnswerCall = async ({pcCall, dispatch, isVoiceCall}) => {
   pcCall.current = new RTCPeerConnection(servers);
+
   const local = await mediaDevices.getUserMedia(
     isVoiceCall ? mediaAConstraints : mediaAVConstraints,
   );

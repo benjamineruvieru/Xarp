@@ -1,4 +1,5 @@
 import InCallManager from 'react-native-incall-manager';
+import BackgroundTimer from 'react-native-background-timer';
 
 export function reducer(state, action) {
   switch (action.type) {
@@ -71,6 +72,8 @@ export function reducer(state, action) {
     case 'endCall': {
       InCallManager.stopRingtone();
       InCallManager.stop();
+      BackgroundTimer.stopBackgroundTimer();
+
       state.localStream?.getTracks().map(track => {
         track.stop();
       });

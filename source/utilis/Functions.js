@@ -15,6 +15,10 @@ export const writeUsername = username => {
   });
 };
 
+export const deleteUsername = username => {
+  firestore().collection('Usernames').doc(username).delete();
+};
+
 export const userNameExists = async username => {
   const user = await firestore().collection('Usernames').doc(username).get();
   return user.exists;

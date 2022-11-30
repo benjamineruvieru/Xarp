@@ -12,3 +12,4 @@
 -keep class com.facebook.react.turbomodule.** { *; }
 -keep class org.webrtc.** { *; }
 -keep class com.oney.WebRTCModule.** { *; }
+-keep public class com.horcrux.svg.** {*;}
