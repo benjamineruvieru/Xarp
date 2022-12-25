@@ -5,7 +5,6 @@ import SendSvg from '../../../assets/svg/send.svg';
 import Icons, {IconsType} from '../../../components/Icons';
 import RNFS from 'react-native-fs';
 import RNConvertPhAsset from 'react-native-convert-ph-asset';
-import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import RNFS_Functions from '../../engine/RNFS_Functions';
 import {
   TouchableOpacity,
@@ -26,9 +25,9 @@ const openGallery = ({navigation, sendMessage}) => {
   DeviceEventEmitter.addListener('receiveMedia', eventData => {
     eventData.media.map(response => {
       if (Platform.OS === 'ios') {
-        if (response.mediaType === 'video') {
+        if (response.node.type.includes('video')) {
           RNConvertPhAsset.convertVideoFromUrl({
-            url: response.uri,
+            url: response.node.image.uri,
             convertTo: 'mov',
             quality: 'high',
           }).then(res => {
@@ -37,38 +36,58 @@ const openGallery = ({navigation, sendMessage}) => {
                 path: data.path,
                 size: data.size,
                 sendMessage,
-                name: response.filename,
+                name: response.node.image.filename,
               });
             });
           });
         } else {
-          if (response.size) {
+          const getAssetFileAbsolutePath = async assetPath => {
+            const dest = `${RNFS.TemporaryDirectoryPath}${Math.random()
+              .toString(36)
+              .substring(7)}.jpg`;
+
+            try {
+              let absolutePath = await RNFS.copyAssetsFileIOS(
+                assetPath,
+                dest,
+                0,
+                0,
+              );
+              return absolutePath;
+            } catch (err) {
+              return null;
+            }
+          };
+          getAssetFileAbsolutePath(response.node.image.uri).then(path => {
             RNFS_Functions.initFileTransfer({
-              path: response.uri,
-              size: response.size,
+              path,
+              size: response.node.image.fileSize,
               sendMessage,
-              name: response.filename,
+              name: response.node.image.filename,
             });
-          } else {
-            CameraRoll.iosGetImageDataById(response.id, false).then(res => {
-              RNFS_Functions.initFileTransfer({
-                path: res.node.image.filepath,
-                size: res.node.image.fileSize,
-                sendMessage,
-                name: res.node.image.filename,
-              });
-            });
-          }
+          });
+
+          // } else {
+          // CameraRoll.iosGetImageDataById(response.node.image.id, false).then(
+          //   res => {
+          //     RNFS_Functions.initFileTransfer({
+          //       path: res.node.image.filepath,
+          //       size: res.node.image.fileSize,
+          //       sendMessage,
+          //       name: res.node.image.filename,
+          //     });
+          //   },
+          // );
         }
       } else {
-        RNFS.stat(response.uri).then(res => {
-          RNFS_Functions.initFileTransfer({
-            path: response.uri,
-            size: res.size,
-            sendMessage,
-            name: response.filename,
-          });
+        // RNFS.stat(response.uri).then(res => {
+        RNFS_Functions.initFileTransfer({
+          path: response.node.image.uri,
+          size: response.node.image.fileSize,
+          sendMessage,
+          name: response.node.image.filename,
         });
+        // });
       }
     });
     DeviceEventEmitter.removeAllListeners('receiveMedia');

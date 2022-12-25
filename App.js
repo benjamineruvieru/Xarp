@@ -23,7 +23,13 @@ if (Platform.OS === 'ios') {
 } else {
   PermissionsAndroid.request(
     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-  );
+  ).then(granted => {
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      RNFS.mkdir(
+        RNFS.ExternalStorageDirectoryPath + '/Xarp Spaces/Received Files',
+      );
+    }
+  });
 }
 const App = () => {
   return (

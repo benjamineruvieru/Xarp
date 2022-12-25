@@ -85,7 +85,7 @@ export const Settings = ({Notify, closeSheet}) => {
       imageOnly: true,
     });
     DeviceEventEmitter.addListener('receiveMedia', eventData => {
-      setPic(eventData.media[0]);
+      setPic(eventData.media[0].node.image);
       DeviceEventEmitter.removeAllListeners('receiveMedia');
     });
   };

@@ -51,15 +51,15 @@ function reducer(state, action) {
 
 const SendMedia = ({navigation}) => {
   const route = useRoute();
-  // const listtmp = route.params;
   const [state, dispatch] = useReducer(reducer, {
-    uri: route.params[0].uri,
-    duration: route.params[0].duration * 1000,
+    uri: route.params[0].node.image.uri,
+    duration: route.params[0].node.image.playableDuration * 1000,
     fullList: route.params,
-    mediaType: route.params[0].mediaType,
+    mediaType: route.params[0].node.type,
     currentIndex: 0,
     croppedUri: {},
-    finalVideoUrl: Platform.OS === 'android' ? route.params[0].uri : null,
+    finalVideoUrl:
+      Platform.OS === 'android' ? route.params[0].node.image.uri : null,
   });
 
   const [thumbList, setThumblist] = useState(null);
@@ -67,7 +67,7 @@ const SendMedia = ({navigation}) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    if (Platform.OS === 'ios' && state.mediaType === 'video') {
+    if (Platform.OS === 'ios' && state.mediaType.includes('video')) {
       RNConvertPhAsset.convertVideoFromUrl({
         url: state.uri,
         convertTo: 'mov',
@@ -82,7 +82,7 @@ const SendMedia = ({navigation}) => {
   }, [state.uri]);
 
   useEffect(() => {
-    if (state.finalVideoUrl && state.mediaType === 'video') {
+    if (state.finalVideoUrl && state.mediaType.includes('video')) {
       renderThumbnails();
     }
   }, [state.finalVideoUrl]);
@@ -126,7 +126,7 @@ const SendMedia = ({navigation}) => {
         uri={state.uri}
         setThumblist={setThumblist}
       />
-      {state.mediaType === 'photo' ? (
+      {state.mediaType.includes('image') ? (
         <Image
           resizeMode="contain"
           source={{

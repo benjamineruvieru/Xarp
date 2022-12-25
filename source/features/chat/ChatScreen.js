@@ -80,7 +80,6 @@ const ChatScreen = ({route, navigation}) => {
     }
 
     pc.current.onconnectionstatechange = async state => {
-      console.log(pc.current.connectionState);
       if (pc.current.connectionState === 'failed') {
         endCall();
         navigation.replace('StartChat');

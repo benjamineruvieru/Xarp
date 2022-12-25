@@ -24,7 +24,6 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8853BB0B9F014DE4B4FC0C8A /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D9DB98FE4E1E4F5C87440C92 /* MaterialCommunityIcons.ttf */; };
 		AD8798F68D0D295E30069BBD /* libPods-Lands-LandsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24172286C3B39C12D0FB825B /* libPods-Lands-LandsTests.a */; };
-		B0ACAD46CDEE9012180AD69B /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C297B475CB1AE308EC5A41 /* ExpoModulesProvider.swift */; };
 		B72FA7598AEE450BBAA4D6AB /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84AF95C3240E49BE99D02E94 /* FontAwesome.ttf */; };
 		B82E582A053A4DE2B6211F56 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C61723778473AB003F703 /* FontAwesome5_Solid.ttf */; };
 		BD5BC3B808244058981277A6 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5BE15D6AEB034022873B3FB3 /* EvilIcons.ttf */; };
@@ -35,7 +34,6 @@
 		EAD7BF097A7B49D08713BA92 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D2B951CF26F410D9F958081 /* Octicons.ttf */; };
 		F3E1A620ED254E2DA32A63A6 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05DAE5D651E94DAA8911B933 /* Entypo.ttf */; };
 		F6225E9179D641FE95761BBA /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C35BE3F28E34315A8DB8CA1 /* FontAwesome5_Brands.ttf */; };
-		FB235511187C15619C537A9A /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1BECE38D3DAB5AA5E2B3C2 /* ExpoModulesProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +50,7 @@
 		00E356EE1AD99517003FC87E /* LandsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LandsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* LandsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LandsTests.m; sourceTree = "<group>"; };
+		0427C8C8293DD58800849DE5 /* Lands.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Lands.entitlements; path = Lands/Lands.entitlements; sourceTree = "<group>"; };
 		0472815A28EF5592005E4128 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		048F4280293428E100C0AC61 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = Lands/BootSplash.storyboard; sourceTree = "<group>"; };
 		04DFB6ED28F3700A00EDE7C0 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -61,7 +60,6 @@
 		04DFB6F528F370DD00EDE7C0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		04DFB6F728F370E800EDE7C0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		05DAE5D651E94DAA8911B933 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = ../source/assets/fonts/Entypo.ttf; sourceTree = "<group>"; };
-		07C297B475CB1AE308EC5A41 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Lands/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		106105B41165464CB2795398 /* Poppins-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Light.ttf"; path = "../source/assets/fonts/Poppins-Light.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Lands.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lands.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Lands/AppDelegate.h; sourceTree = "<group>"; };
@@ -95,7 +93,6 @@
 		A5F3375B830CDBC35F4D8BDD /* libPods-Lands.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Lands.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B837F8BC45E140498812D7B6 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Bold.ttf"; path = "../source/assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		BA7D1128F09741448B9BAC27 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-SemiBold.ttf"; path = "../source/assets/fonts/Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
-		CE1BECE38D3DAB5AA5E2B3C2 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Lands-LandsTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		D9DB98FE4E1E4F5C87440C92 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = ../source/assets/fonts/MaterialCommunityIcons.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -140,6 +137,7 @@
 		13B07FAE1A68108700A75B9A /* Lands */ = {
 			isa = PBXGroup;
 			children = (
+				0427C8C8293DD58800849DE5 /* Lands.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -196,14 +194,6 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		45BE1E6F4D9D01A57ABC7FA4 /* LandsTests */ = {
-			isa = PBXGroup;
-			children = (
-				CE1BECE38D3DAB5AA5E2B3C2 /* ExpoModulesProvider.swift */,
-			);
-			name = LandsTests;
-			sourceTree = "<group>";
-		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -222,7 +212,6 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
 				38838A247C9649AFBE776DA4 /* Resources */,
-				8AB9B41163A7A5AEA56CEB90 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -238,15 +227,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8AB9B41163A7A5AEA56CEB90 /* ExpoModulesProviders */ = {
-			isa = PBXGroup;
-			children = (
-				BE56D1BA9DC2DCAFB369442A /* Lands */,
-				45BE1E6F4D9D01A57ABC7FA4 /* LandsTests */,
-			);
-			name = ExpoModulesProviders;
-			sourceTree = "<group>";
-		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -256,14 +236,6 @@
 				89C6BE57DB24E9ADA2F236DE /* Pods-Lands-LandsTests.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		BE56D1BA9DC2DCAFB369442A /* Lands */ = {
-			isa = PBXGroup;
-			children = (
-				07C297B475CB1AE308EC5A41 /* ExpoModulesProvider.swift */,
-			);
-			name = Lands;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -557,7 +529,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				00E356F31AD99517003FC87E /* LandsTests.m in Sources */,
-				FB235511187C15619C537A9A /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,7 +538,6 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				B0ACAD46CDEE9012180AD69B /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -586,7 +556,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-Lands-LandsTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -615,7 +584,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-Lands-LandsTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = LandsTests/Info.plist;
@@ -643,14 +611,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Lands/Lands.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 28ZNCLAG27;
-				ENABLE_BITCODE = NO;
+				DEVELOPMENT_TEAM = B7YQ62QCUF;
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = Lands/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -672,13 +642,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Lands/Lands.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 28ZNCLAG27;
+				DEVELOPMENT_TEAM = B7YQ62QCUF;
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = Lands/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

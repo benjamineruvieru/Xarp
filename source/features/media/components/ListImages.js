@@ -59,8 +59,8 @@ const ListImages = ({list, uri, setThumblist, dispatch}) => {
         <ImageComp
           index={index}
           dispatch={dispatch}
-          imgpath={img.uri}
-          key={img.id}
+          imgpath={img.node.image.uri}
+          key={index}
           uri={uri}
           img={img}
           setThumblist={setThumblist}

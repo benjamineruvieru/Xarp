@@ -17,15 +17,15 @@ const SendTray = ({thumbList, progress, type, dispatch, state}) => {
 
     const newmediaList = mediaList.map((item, index) => {
       if (croppedUri[index]) {
+        item.node.image.uri = croppedUri[index].uri;
+        item.node.image.fileSize = croppedUri[index].size;
         return {
           ...item,
-          ...croppedUri[index],
         };
       } else {
         return item;
       }
     });
-
     DeviceEventEmitter.emit('receiveMedia', {media: newmediaList});
     navigation.goBack();
     navigation.goBack();
@@ -72,7 +72,7 @@ const SendTray = ({thumbList, progress, type, dispatch, state}) => {
 
   return (
     <View style={styles.container}>
-      {type === 'video' ? (
+      {type.includes('video') ? (
         <View style={styles.thumbSliderThumbs}>
           <View
             style={{

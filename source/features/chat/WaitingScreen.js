@@ -10,9 +10,9 @@ import Text from '../../components/Text';
 import WebRTCFunctions from '../engine/WebRTC_Functions';
 import {getItem} from '../../utilis/storage';
 
-const username = getItem('username');
-
 const WaitingScreen = ({endCall, status, otheruser}) => {
+  const username = getItem('username');
+
   const inset = useSafeAreaInsets();
   const navigation = useNavigation();
 

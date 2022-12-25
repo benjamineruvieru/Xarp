@@ -4,7 +4,6 @@ import {
   Pressable,
   Image,
   TouchableOpacity,
-  Linking,
 } from 'react-native';
 import React, {useEffect, useState, useCallback} from 'react';
 import Colors from '../../constants/Colors';
@@ -12,7 +11,7 @@ import {getPercentWidth} from '../../utilis/Functions';
 import {FlashList} from '@shopify/flash-list';
 import Icons, {IconsType} from '../../components/Icons';
 import Text from '../../components/Text';
-import * as MediaLibrary from 'expo-media-library';
+import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 
 const SendButton = ({startEditting}) => {
   return (
@@ -40,29 +39,24 @@ const Gallery = ({navigation, route}) => {
   const {allowMultiple, imageOnly} = route.params;
   let mediaTypeArr;
   if (imageOnly) {
-    mediaTypeArr = ['photo'];
+    mediaTypeArr = 'Photos';
   } else {
-    mediaTypeArr = ['video', 'photo'];
+    mediaTypeArr = 'All';
   }
   const loadNextPagePictures = useCallback(
     async nextCursor => {
       try {
-        const {assets, endCursor, hasNextPage} =
-          await MediaLibrary.getAssetsAsync({
-            first: 20,
-            after: nextCursor,
-            mediaType: mediaTypeArr,
-            sortBy: 'creationTime',
-          });
-        setPhotos(prev => [...(prev ?? []), ...assets]);
-
-        if (hasNextPage) {
-          loadNextPagePictures(endCursor);
+        const data = await CameraRoll.getPhotos({
+          first: 20,
+          after: nextCursor,
+          assetType: mediaTypeArr,
+          include: ['filename', 'fileSize'],
+        });
+        setPhotos(prev => [...(prev ?? []), ...data.edges]);
+        if (data.page_info.has_next_page) {
+          loadNextPagePictures(data.page_info.end_cursor);
         }
-      } catch (error) {
-        console.error('useGallery getPhotos error:', error);
-      } finally {
-      }
+      } catch (error) {}
     },
     [photos],
   );
@@ -101,6 +95,7 @@ const Gallery = ({navigation, route}) => {
   };
 
   const RenderItem = ({item}) => {
+    itemDetails = item.node.image;
     return (
       <Pressable
         onPress={() => {
@@ -109,7 +104,7 @@ const Gallery = ({navigation, route}) => {
         onLongPress={() => {
           allowMultiple && addToList(item);
         }}>
-        {item.mediaType === 'video' && (
+        {item.node.type.includes('video') && (
           <Icons
             style={{
               top: 3,
@@ -148,34 +143,17 @@ const Gallery = ({navigation, route}) => {
             width: getPercentWidth(30),
             height: getPercentWidth(30),
           }}
-          source={{uri: item.uri}}
+          source={{uri: itemDetails.uri}}
         />
       </Pressable>
     );
   };
 
-  const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
-
-  MediaLibrary.getPermissionsAsync().then(async res => {
-    if (!res.canAskAgain || res.status === 'denied') {
-      Linking.openSettings();
-    } else if (!res.granted) {
-      const res = await MediaLibrary.requestPermissionsAsync();
-      if (!res.granted) {
-        loadNextPagePictures();
-      } else {
-        navigation.goBack();
-      }
-    }
-  });
-
   useEffect(() => {
-    if (permissionResponse?.granted) {
-      if (photos.length < 1) {
-        loadNextPagePictures();
-      }
+    if (photos.length < 1) {
+      loadNextPagePictures();
     }
-  }, [loadNextPagePictures, photos, permissionResponse]);
+  }, [loadNextPagePictures, photos]);
 
   return (
     <View style={styles.container}>
