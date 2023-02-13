@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import React, {useState} from 'react';
 import Text from '../../../components/Text';
@@ -33,6 +34,16 @@ export const Join = ({Notify, closeJoinSheet, openSheet}) => {
   const join = async () => {
     const {data, exists} = await checkIfUserExists(text);
     if (exists) {
+      console.log(data);
+      if (data?.blockedList) {
+        const blockedList = data?.blockedList;
+        console.log(blockedList);
+        if (blockedList.includes(username)) {
+          Notify('error', 'An error occured', 'You cannot join this chat');
+          setLoad(false);
+          return;
+        }
+      }
       if (data?.password) {
         setUserStore(text);
         setPassword(data.password);
@@ -159,23 +170,24 @@ export const Join = ({Notify, closeJoinSheet, openSheet}) => {
         style={{alignSelf: 'center', ...styles.button}}>
         {load ? <ActivityIndicator color={'white'} /> : <Text>Join Chat</Text>}
       </TouchableOpacity>
-
-      <TouchableOpacity
-        disabled={load2}
-        onPress={joinRandom}
-        style={{
-          ...styles.button,
-          alignSelf: 'center',
-          backgroundColor: 'transparent',
-          borderWidth: 1,
-          borderColor: Colors.primary,
-        }}>
-        {load2 ? (
-          <ActivityIndicator color={'white'} />
-        ) : (
-          <Text>Join A Random Chat</Text>
-        )}
-      </TouchableOpacity>
+      {Platform.OS === 'android' && (
+        <TouchableOpacity
+          disabled={load2}
+          onPress={joinRandom}
+          style={{
+            ...styles.button,
+            alignSelf: 'center',
+            backgroundColor: 'transparent',
+            borderWidth: 1,
+            borderColor: Colors.primary,
+          }}>
+          {load2 ? (
+            <ActivityIndicator color={'white'} />
+          ) : (
+            <Text>Join A Random Chat</Text>
+          )}
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

@@ -1,4 +1,3 @@
-import {style} from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 import React from 'react';
 import {
   Modal,
@@ -6,8 +5,10 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import Colors from '../constants/Colors';
+import {setItem} from '../utilis/storage';
 import Text from './Text';
 
 const Dialog = props => {
@@ -50,6 +51,44 @@ export const PopDialog = ({title, message, onPress, closeModal, open}) => {
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={onPress}>
               <Text>End Space</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </Dialog>
+  );
+};
+
+export const CustomDialog = ({
+  title,
+  message,
+  onPress,
+  closeModal,
+  open,
+  button,
+}) => {
+  return (
+    <Dialog open={open} closeModal={closeModal}>
+      <View style={styles.dialog_background}>
+        <View style={styles.title}>
+          <Text size={'title'}>{title}</Text>
+        </View>
+        <View style={{padding: 10, flex: 1}}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+            }}>
+            <Text style={{textAlign: 'center'}}>{message}</Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity
+              style={{...styles.button, backgroundColor: 'transparent'}}
+              onPress={closeModal}>
+              <Text>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={onPress}>
+              <Text>{button}</Text>
             </TouchableOpacity>
           </View>
         </View>

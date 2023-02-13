@@ -3,6 +3,14 @@ import BackgroundTimer from 'react-native-background-timer';
 
 export function reducer(state, action) {
   switch (action.type) {
+    case 'delete_message': {
+      const messages = [...state.messages];
+      messages.splice(action.index, 1);
+      return {
+        ...state,
+        messages: [...messages],
+      };
+    }
     case 'change_chatname': {
       return {
         ...state,

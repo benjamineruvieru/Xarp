@@ -112,6 +112,13 @@ export const startChat = async ({
       password: password,
     });
   }
+  const blockedList = getItem('blockedList', true);
+  console.log(blockedList);
+  if (blockedList.length > 0) {
+    channelDoc.update({
+      blockedList: blockedList,
+    });
+  }
 
   const subscriber = channelDoc.onSnapshot(async snapshot => {
     const data = snapshot.data();

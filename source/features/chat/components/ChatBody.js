@@ -3,7 +3,7 @@ import {RenderMessages} from './RenderMessages';
 import {FlashList} from '@shopify/flash-list';
 import {Image, View, StyleSheet} from 'react-native';
 
-export const ChatBody = ({messages}) => {
+export const ChatBody = ({messages, dispatch}) => {
   return (
     <View style={styles.body}>
       <Image
@@ -16,7 +16,9 @@ export const ChatBody = ({messages}) => {
         inverted={true}
         estimatedItemSize={71}
         data={messages}
-        renderItem={RenderMessages}
+        renderItem={({item, index}) => (
+          <RenderMessages item={item} index={index} dispatch={dispatch} />
+        )}
         keyExtractor={(_, i) => i}
       />
     </View>

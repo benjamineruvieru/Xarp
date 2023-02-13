@@ -1,12 +1,13 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
-import {StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, View, Image, TouchableOpacity} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icons, {IconsType} from '../../../components/Icons';
 import LockSvg from '../../../assets/svg/lock.svg';
-import {PopDialog} from '../../../components/Dialog';
+import {CustomDialog, PopDialog} from '../../../components/Dialog';
 import Colors from '../../../constants/Colors';
 import Text from '../../../components/Text';
+import {getItem, setItem} from '../../../utilis/storage';
 
 const SecureChat = () => {
   return (
@@ -55,6 +56,8 @@ export const ChatHead = ({
   });
 
   const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
+
   const navigation = useNavigation();
   return (
     <View style={styles.headerview}>
@@ -66,11 +69,13 @@ export const ChatHead = ({
         style={{marginRight: 5}}
         fun={() => setOpen(true)}
       />
-      <Image
-        resizeMode="cover"
-        source={img ? img : require('../../../assets/images/profile.png')}
-        style={styles.profileimg}
-      />
+      <TouchableOpacity onPress={() => setOpen2(true)}>
+        <Image
+          resizeMode="cover"
+          source={img ? img : require('../../../assets/images/profile.png')}
+          style={styles.profileimg}
+        />
+      </TouchableOpacity>
       <View style={{flex: 1, paddingHorizontal: 20}}>
         <Text numLines={1} size={'title'}>
           {chatname
@@ -121,6 +126,22 @@ export const ChatHead = ({
           endCall();
           navigation.replace('StartChat');
           setOpen(false);
+        }}
+      />
+      <CustomDialog
+        title={'Block this user'}
+        message={'You will no longer be able to connect with this user again'}
+        open={open2}
+        closeModal={() => setOpen2(false)}
+        button={'Block'}
+        onPress={() => {
+          const blockedList = getItem('blockedList', true);
+          blockedList.push(chatname);
+          console.log(blockedList);
+          setItem('blockedList', blockedList, true);
+          endCall();
+          navigation.replace('StartChat');
+          setOpen2(false);
         }}
       />
     </View>

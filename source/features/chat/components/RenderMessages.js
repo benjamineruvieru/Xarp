@@ -1,11 +1,12 @@
 import * as Progress from 'react-native-progress';
 import {getPercentWidth} from '../../../utilis/Functions';
-import React from 'react';
+import React, {Children, useState} from 'react';
 import FileViewer from 'react-native-file-viewer';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Text from '../../../components/Text';
 import Colors from '../../../constants/Colors';
-import {getItem} from '../../../utilis/storage';
+import {getItem, setItem} from '../../../utilis/storage';
+import {CustomDialog} from '../../../components/Dialog';
 
 const openFile = async props => {
   const username = getItem('username');
@@ -58,11 +59,43 @@ const RenderMedia = ({props}) => {
   );
 };
 
-export const RenderMessages = props => {
-  const username = getItem('username');
+const Touch = ({children, dispatch, index, style}) => {
+  const [open, setOpen] = useState(false);
 
   return (
-    <View style={{paddingHorizontal: 8, paddingTop: 6}}>
+    <TouchableOpacity
+      style={{...style}}
+      onLongPress={() => {
+        setOpen(true);
+      }}>
+      {children}
+      <CustomDialog
+        title={'Report this message'}
+        message={
+          'This message will be deleted and forwarded to our team for evaluation. If you wish to block this user, tap on their profile to find the block option'
+        }
+        open={open}
+        closeModal={() => setOpen(false)}
+        button={'Report'}
+        onPress={() => {
+          dispatch({
+            type: 'delete_message',
+            index: index,
+          });
+          setOpen(false);
+        }}
+      />
+    </TouchableOpacity>
+  );
+};
+
+export const RenderMessages = props => {
+  const username = getItem('username');
+  return (
+    <Touch
+      dispatch={props.dispatch}
+      index={props.index}
+      style={{paddingHorizontal: 8, paddingTop: 6}}>
       {props.item.type === 'media' ? (
         <RenderMedia props={props} />
       ) : (
@@ -76,7 +109,7 @@ export const RenderMessages = props => {
           </View>
         </View>
       )}
-    </View>
+    </Touch>
   );
 };
 

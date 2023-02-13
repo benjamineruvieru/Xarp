@@ -38,13 +38,13 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Xarps needs access to your camera to make a video call</string>
+	<string>Allow access to your camera for video calling</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Xarp needs access to your microphone to enable audio functionality during calls</string>
+	<string>Access to your microphone allows partcipants to hear you during calls</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Xarp needs access to your media library to share photos and video</string>
+	<string>Allow access to photos and upload photos from your library</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

@@ -1,4 +1,10 @@
-import {ActivityIndicator, StyleSheet, Switch, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Platform,
+  StyleSheet,
+  Switch,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Colors from '../../constants/Colors';
@@ -78,7 +84,7 @@ const WaitingScreen = ({endCall, status, otheruser}) => {
           flex: 1,
           justifyContent: 'center',
         }}>
-        {!otheruser && (
+        {!otheruser && Platform.OS === 'android' && (
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text size={'small'}>Allow random users join</Text>
             <Switch

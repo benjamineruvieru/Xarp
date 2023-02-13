@@ -373,7 +373,7 @@ const ChatScreen = ({route, navigation}) => {
                 startVoiceCallWrapper={startVoiceCallWrapper}
               />
               <SafeAreaView style={styles.container}>
-                <ChatBody messages={state.messages} />
+                <ChatBody dispatch={dispatch} messages={state.messages} />
                 <ChatBottom sendMessage={sendMessage} dispatch={dispatch} />
               </SafeAreaView>
             </KeyboardAvoidingView>
