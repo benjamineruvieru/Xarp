@@ -25,7 +25,7 @@ Download the app today and share with me what you think.
 ## How To Install
 You can get the app on [play store](https://play.google.com/store/apps/details?id=com.xarpspaces)
 <br/>
-iOS Users: Get the app through TestFlight [Link](https://apps.apple.com/ng/app/xarp-spaces/id6444863755)
+iOS Users: [Link](https://apps.apple.com/ng/app/xarp-spaces/id6444863755)
 
 ## Features
 - WebRTC peer-to-peer technology for real-time communication
