@@ -30,37 +30,21 @@ const SecureChat = () => {
 
 export const ChatHead = ({
   endCall,
-  chatname,
+
   startVideoCallWrapper,
   dispatch,
-  img,
-  startVoiceCallWrapper,
-}) => {
-  const inset = useSafeAreaInsets();
-  const styles = StyleSheet.create({
-    headerview: {
-      backgroundColor: Colors.primary,
-      width: '100%',
-      borderRadius: 20,
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingHorizontal: 10,
-      paddingTop: inset.top + 7,
-      paddingBottom: 10,
-    },
-    profileimg: {
-      height: 50,
-      width: 50,
-      borderRadius: 360,
-    },
-  });
 
+  startVoiceCallWrapper,
+  state,
+}) => {
+  const {img, chatname} = state ?? {};
+  const inset = useSafeAreaInsets();
   const [open, setOpen] = useState(false);
-  const [open2, setOpen2] = useState(false);
+  const [openBlockModal, setOpenBlockModal] = useState(false);
 
   const navigation = useNavigation();
   return (
-    <View style={styles.headerview}>
+    <View style={[styles.headerview, {paddingTop: inset.top + 7}]}>
       <Icons
         type={IconsType.Ionicons}
         color={'white'}
@@ -69,7 +53,7 @@ export const ChatHead = ({
         style={{marginRight: 5}}
         fun={() => setOpen(true)}
       />
-      <TouchableOpacity onPress={() => setOpen2(true)}>
+      <TouchableOpacity onPress={() => setOpenBlockModal(true)}>
         <Image
           resizeMode="cover"
           source={img ? img : require('../../../assets/images/profile.png')}
@@ -84,14 +68,7 @@ export const ChatHead = ({
         </Text>
         <SecureChat />
       </View>
-      <View
-        style={{
-          flex: 0.5,
-          justifyContent: 'space-between',
-          flexDirection: 'row',
-          alignItems: 'center',
-          paddingRight: 5,
-        }}>
+      <View style={styles.iconview}>
         <Icons
           type={IconsType.Feather}
           name={'video'}
@@ -131,19 +108,43 @@ export const ChatHead = ({
       <CustomDialog
         title={'Block this user'}
         message={'You will no longer be able to connect with this user again'}
-        open={open2}
-        closeModal={() => setOpen2(false)}
+        open={openBlockModal}
+        closeModal={() => setOpenBlockModal(false)}
         button={'Block'}
         onPress={() => {
           const blockedList = getItem('blockedList', true);
           blockedList.push(chatname);
-          console.log(blockedList);
           setItem('blockedList', blockedList, true);
           endCall();
           navigation.replace('StartChat');
-          setOpen2(false);
+          setOpenBlockModal(false);
         }}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  headerview: {
+    backgroundColor: Colors.primary,
+    width: '100%',
+    borderRadius: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+
+    paddingBottom: 10,
+  },
+  profileimg: {
+    height: 50,
+    width: 50,
+    borderRadius: 360,
+  },
+  iconview: {
+    flex: 0.5,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingRight: 5,
+  },
+});

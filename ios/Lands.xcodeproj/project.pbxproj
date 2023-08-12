@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* LandsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* LandsTests.m */; };
 		038E85DB9A9243C5913F5E5D /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79B32D207B6B4F8498AA0E02 /* AntDesign.ttf */; };
+		0413323B2A86DC2300156FF2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0413323A2A86DC2300156FF2 /* GoogleService-Info.plist */; };
 		0472815B28EF5592005E4128 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0472815A28EF5592005E4128 /* GoogleService-Info.plist */; };
 		048F4284293428E800C0AC61 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 048F4280293428E100C0AC61 /* BootSplash.storyboard */; };
 		0BD3AF2899CA4D719195E6B2 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9B1F28A107974050BF6888DE /* Feather.ttf */; };
@@ -50,6 +51,7 @@
 		00E356EE1AD99517003FC87E /* LandsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LandsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* LandsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LandsTests.m; sourceTree = "<group>"; };
+		0413323A2A86DC2300156FF2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0427C8C8293DD58800849DE5 /* Lands.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Lands.entitlements; path = Lands/Lands.entitlements; sourceTree = "<group>"; };
 		0472815A28EF5592005E4128 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		048F4280293428E100C0AC61 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = Lands/BootSplash.storyboard; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				0413323A2A86DC2300156FF2 /* GoogleService-Info.plist */,
 				0472815A28EF5592005E4128 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* Lands */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -346,6 +349,7 @@
 				1D706FAFF93E4CEDBDD4DEAD /* FontAwesome5_Regular.ttf in Resources */,
 				B82E582A053A4DE2B6211F56 /* FontAwesome5_Solid.ttf in Resources */,
 				CEA55FBECED44AB6B70A0F63 /* Fontisto.ttf in Resources */,
+				0413323B2A86DC2300156FF2 /* GoogleService-Info.plist in Resources */,
 				6246BAB7B5B84E04BDBEFC7E /* Foundation.ttf in Resources */,
 				BE174B1352ED41808690501B /* Ionicons.ttf in Resources */,
 				8853BB0B9F014DE4B4FC0C8A /* MaterialCommunityIcons.ttf in Resources */,

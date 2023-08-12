@@ -1,11 +1,5 @@
-import {
-  StyleSheet,
-  SafeAreaView,
-  View,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
+import {StyleSheet, SafeAreaView, View, TouchableOpacity} from 'react-native';
+import React, {useEffect, useRef} from 'react';
 import Colors from '../../constants/Colors';
 import Text from '../../components/Text';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -18,16 +12,15 @@ import DropdownAlert from 'react-native-dropdownalert';
 import {Head} from './components/Head';
 import {Settings} from './components/Settings';
 import {Join} from './components/Join';
-import {AgreeToTerms} from '../../components/Dialog';
 
 const StartChat = ({navigation}) => {
-  const [open, setOpen] = useState(false);
   const modalizeRef = useRef(null);
   const modalizeRefJoin = useRef(null);
   const modalizeRefTerms = useRef(null);
 
   const insets = useSafeAreaInsets();
   let dropDownAlertRef = useRef(null);
+
   useEffect(() => {
     if (getItem('hasAgreedToTerms') != 'true') {
       openSheetTerms();
@@ -103,7 +96,7 @@ const StartChat = ({navigation}) => {
         handlePosition="inside"
         modalStyle={styles.sheet}
         ref={modalizeRefJoin}
-        modalHeight={getPercentHeight(55)}>
+        adjustToContentHeight>
         <Join
           Notify={Notify}
           openSheet={openSheet}

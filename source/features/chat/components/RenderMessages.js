@@ -1,11 +1,11 @@
 import * as Progress from 'react-native-progress';
 import {getPercentWidth} from '../../../utilis/Functions';
-import React, {Children, useState} from 'react';
+import React, {useState} from 'react';
 import FileViewer from 'react-native-file-viewer';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Text from '../../../components/Text';
 import Colors from '../../../constants/Colors';
-import {getItem, setItem} from '../../../utilis/storage';
+import {getItem} from '../../../utilis/storage';
 import {CustomDialog} from '../../../components/Dialog';
 
 const openFile = async props => {
@@ -17,30 +17,29 @@ const openFile = async props => {
     await FileViewer.open(props.item.extra.receiverPath);
   }
 };
-const RenderMedia = ({props}) => {
+
+const RenderMedia = ({item}) => {
+  const {user, extra, message, time} = item;
   const username = getItem('username');
 
-  const color =
-    username === props.item.user ? Colors.primaryDark : Colors.otherDarker;
+  const color = username === user ? Colors.primaryDark : Colors.otherDarker;
 
   return (
     <TouchableOpacity
-      disabled={props.item.extra.progress < 1}
+      disabled={extra.progress < 1}
       onPress={() => openFile(props)}
-      style={username === props.item.user ? styles.mefile : styles.otherfile}>
+      style={username === user ? styles.mefile : styles.otherfile}>
       <View
         style={{
           backgroundColor:
-            username === props.item.user
-              ? Colors.primaryDark
-              : Colors.otherDarker,
+            username === user ? Colors.primaryDark : Colors.otherDarker,
           padding: 10,
           borderRadius: 5,
         }}>
-        <Text>{props.item.message}</Text>
+        <Text>{message}</Text>
       </View>
       <Progress.Bar
-        progress={props.item.extra.progress}
+        progress={extra.progress}
         width={getPercentWidth(70) - 20}
         color={color}
         borderColor={color}
@@ -52,8 +51,8 @@ const RenderMedia = ({props}) => {
           flexDirection: 'row',
           justifyContent: 'space-between',
         }}>
-        <Text size={'small'}>{props.item.time}</Text>
-        <Text size={'small'}>{props.item.extra.filesize}</Text>
+        <Text size={'small'}>{time}</Text>
+        <Text size={'small'}>{extra.filesize}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -89,23 +88,21 @@ const Touch = ({children, dispatch, index, style}) => {
   );
 };
 
-export const RenderMessages = props => {
+export const RenderMessages = ({item, index, dispatch}) => {
+  const {user, message, time, type} = item ?? {};
   const username = getItem('username');
   return (
-    <Touch
-      dispatch={props.dispatch}
-      index={props.index}
-      style={{paddingHorizontal: 8, paddingTop: 6}}>
-      {props.item.type === 'media' ? (
-        <RenderMedia props={props} />
+    <Touch dispatch={dispatch} index={index} style={styles.msgTouch}>
+      {type === 'media' ? (
+        <RenderMedia item={item} />
       ) : (
-        <View style={username === props.item.user ? styles.me : styles.other}>
-          <Text>{props.item.message}</Text>
+        <View style={username === user ? styles.me : styles.other}>
+          <Text>{message}</Text>
           <View
             style={{
               paddingBottom: 5,
             }}>
-            <Text size={'small'}>{props.item.time}</Text>
+            <Text size={'small'}>{time}</Text>
           </View>
         </View>
       )}
@@ -148,4 +145,5 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingBottom: 0,
   },
+  msgTouch: {paddingHorizontal: 8, paddingTop: 6},
 });

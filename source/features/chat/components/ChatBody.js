@@ -3,14 +3,12 @@ import {RenderMessages} from './RenderMessages';
 import {FlashList} from '@shopify/flash-list';
 import {Image, View, StyleSheet} from 'react-native';
 
+const bg = require('../../../assets/images/background.png');
+
 export const ChatBody = ({messages, dispatch}) => {
   return (
     <View style={styles.body}>
-      <Image
-        resizeMode="cover"
-        source={require('../../../assets/images/background.png')}
-        style={styles.overlay_img}
-      />
+      <Image resizeMode="cover" source={bg} style={styles.overlay_img} />
       <FlashList
         extraData={messages}
         inverted={true}

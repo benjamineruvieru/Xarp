@@ -22,6 +22,8 @@ import {reducer} from './reducer';
 import BackgroundTimer from 'react-native-background-timer';
 
 const ChatScreen = ({route, navigation}) => {
+  const [time, setTime] = useState('00:00:00');
+
   const [state, dispatch] = useReducer(reducer, {
     chatname: null,
     status: null,
@@ -41,7 +43,7 @@ const ChatScreen = ({route, navigation}) => {
     answerCandidates: [],
   });
 
-  const {otheruser} = route.params;
+  const {otheruser} = route?.params;
   const username = getItem('username');
 
   const pc = useRef();
@@ -58,7 +60,7 @@ const ChatScreen = ({route, navigation}) => {
         type: 'change_status',
         status: 'Establishing Connection...',
       });
-      var unsubcribeJoin = WebRTCFunctions.joinChat({
+      WebRTCFunctions.joinChat({
         pc,
         handleReceiveMessage,
         sendChannel,
@@ -70,7 +72,7 @@ const ChatScreen = ({route, navigation}) => {
         status: 'Creating Chat...',
       });
 
-      var unsubcribeStart = WebRTCFunctions.startChat({
+      WebRTCFunctions.startChat({
         handleReceiveMessage,
         pc,
         sendChannel,
@@ -283,8 +285,6 @@ const ChatScreen = ({route, navigation}) => {
     });
   };
 
-  const [time, setTime] = useState('00:00:00');
-
   const startTimer = () => {
     setTime('00:00:00');
 
@@ -333,54 +333,27 @@ const ChatScreen = ({route, navigation}) => {
     pc.current.close();
   };
 
-  return (
-    <>
-      {state.isCalling ? (
-        <CallScreen
-          pcCall={pcCall}
-          isParticipantVideoOn={state.isParticipantVideoOn}
-          answerCall={answerCall}
-          dispatch={dispatch}
-          img={state.img}
-          localStream={state.localStream}
-          chatname={state.chatname}
-          isVoiceCall={state.isVoiceCall}
-          sendMessage={sendMessage}
-          remoteStream={state.remoteStream}
-          isReceivingCall={state.isReceivingCall}
-          answered={state.answered}
-          time={time}
-        />
-      ) : (
-        <>
-          {state.waiting ? (
-            <WaitingScreen
-              endCall={endCall}
-              status={state.status}
-              otheruser={otheruser}
-            />
-          ) : (
-            <KeyboardAvoidingView
-              behavior={Platform.OS === 'ios' && 'padding'}
-              style={styles.container}>
-              <StatusBar backgroundColor={'transparent'} translucent={true} />
-              <ChatHead
-                img={state.img}
-                startVideoCallWrapper={startVideoCallWrapper}
-                chatname={state.chatname}
-                endCall={endCall}
-                dispatch={dispatch}
-                startVoiceCallWrapper={startVoiceCallWrapper}
-              />
-              <SafeAreaView style={styles.container}>
-                <ChatBody dispatch={dispatch} messages={state.messages} />
-                <ChatBottom sendMessage={sendMessage} dispatch={dispatch} />
-              </SafeAreaView>
-            </KeyboardAvoidingView>
-          )}
-        </>
-      )}
-    </>
+  return state.isCalling ? (
+    <CallScreen {...{state, pcCall, answerCall, dispatch, sendMessage, time}} />
+  ) : state.waiting ? (
+    <WaitingScreen {...{endCall, status: state.status, otheruser}} />
+  ) : (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' && 'padding'}
+      style={styles.container}>
+      <StatusBar {...{backgroundColor: 'transparent', translucent: true}} />
+      <ChatHead
+        {...{state}}
+        startVideoCallWrapper={startVideoCallWrapper}
+        endCall={endCall}
+        dispatch={dispatch}
+        startVoiceCallWrapper={startVoiceCallWrapper}
+      />
+      <SafeAreaView style={styles.container}>
+        <ChatBody dispatch={dispatch} messages={state.messages} />
+        <ChatBottom sendMessage={sendMessage} dispatch={dispatch} />
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
