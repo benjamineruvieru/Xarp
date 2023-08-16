@@ -1,6 +1,8 @@
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../constants/Variables';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
+import {Platform, PermissionsAndroid} from 'react-native';
+import RNFS from 'react-native-fs';
 
 export const getPercentHeight = percent => {
   return (percent / 100) * SCREEN_HEIGHT;
@@ -67,3 +69,28 @@ export const seperateExt = name => {
 export function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+export const requestExternalStoragePermission = async () => {
+  if (Platform.OS === 'android') {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        RNFS.mkdir(
+          RNFS.ExternalStorageDirectoryPath + '/Xarp Spaces/Received Files',
+        );
+      }
+    } catch (error) {
+      console.error('Error requesting external storage permission:', error);
+    }
+  } else {
+    try {
+      RNFS.mkdir(RNFS.DocumentDirectoryPath + '/Received Files', {
+        NSURLIsExcludedFromBackupKey: false,
+      });
+    } catch (error) {
+      console.error('Error creating dir IOS:', error);
+    }
+  }
+};
