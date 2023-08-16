@@ -8,13 +8,13 @@ import Colors from '../../../constants/Colors';
 import {getItem} from '../../../utilis/storage';
 import {CustomDialog} from '../../../components/Dialog';
 
-const openFile = async props => {
+const openFile = async item => {
   const username = getItem('username');
 
-  if (username === props.item.user) {
-    await FileViewer.open(props.item.extra.senderPath);
+  if (username === item.user) {
+    await FileViewer.open(item.extra.senderPath);
   } else {
-    await FileViewer.open(props.item.extra.receiverPath);
+    await FileViewer.open(item.extra.receiverPath);
   }
 };
 
@@ -27,7 +27,7 @@ const RenderMedia = ({item}) => {
   return (
     <TouchableOpacity
       disabled={extra.progress < 1}
-      onPress={() => openFile(props)}
+      onPress={() => openFile(item)}
       style={username === user ? styles.mefile : styles.otherfile}>
       <View
         style={{

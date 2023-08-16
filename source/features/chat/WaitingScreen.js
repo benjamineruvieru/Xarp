@@ -35,32 +35,9 @@ const WaitingScreen = ({endCall, status, otheruser}) => {
     });
   };
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: Colors.bgMain,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    cancel: {
-      position: 'absolute',
-      top: inset.top + 30,
-      zIndex: 2,
-      left: 0,
-      right: 0,
-      paddingHorizontal: 30,
-    },
-    switch: {
-      transform: [
-        {
-          scale: 0.7,
-        },
-      ],
-    },
-  });
   return (
     <View style={styles.container}>
-      <View style={styles.cancel}>
+      <View style={[styles.cancel, {top: inset.top + 30}]}>
         <Icons
           type={IconsType.AntDesign}
           name={'close'}
@@ -103,3 +80,26 @@ const WaitingScreen = ({endCall, status, otheruser}) => {
 };
 
 export default WaitingScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.bgMain,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cancel: {
+    position: 'absolute',
+
+    zIndex: 2,
+    left: 0,
+    right: 0,
+    paddingHorizontal: 30,
+  },
+  switch: {
+    transform: [
+      {
+        scale: 0.7,
+      },
+    ],
+  },
+});

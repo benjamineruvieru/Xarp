@@ -44,7 +44,7 @@ const ListImages = ({list, uri, setThumblist, dispatch}) => {
     container: {
       flexDirection: 'row',
       position: 'absolute',
-      top: insets.top + 55,
+      top: insets.top + 60,
       left: 16,
       zIndex: 1,
     },

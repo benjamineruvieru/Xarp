@@ -116,7 +116,7 @@ const SendMedia = ({navigation}) => {
         size={30}
         fun={() => navigation.goBack()}
         style={{
-          top: 10 + inset.top + StatusBar.currentHeight,
+          top: 5 + inset.top + StatusBar.currentHeight,
           left: 16,
         }}
       />
