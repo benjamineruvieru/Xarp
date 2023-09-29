@@ -23,7 +23,7 @@ No worrying about server downtime, spying or file size limits – this app uses 
 Download the app today and share with me what you think.
 
 ## How To Install
-You can get the app [here](https://drive.google.com/file/d/1AvB3n7XbXmWuuYzDaBoUtVsVeqwNBSOZ/view?usp=share_link)
+Play Store [here](https://play.google.com/store/apps/details?id=com.xarpspaces.android)
 <br/>
 iOS Users: [Link](https://apps.apple.com/ng/app/xarp-spaces/id6444863755)
 
