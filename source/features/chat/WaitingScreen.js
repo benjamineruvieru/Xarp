@@ -61,7 +61,7 @@ const WaitingScreen = ({endCall, status, otheruser}) => {
           flex: 1,
           justifyContent: 'center',
         }}>
-        {!otheruser && Platform.OS === 'android' && (
+        {false && (
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text size={'small'}>Allow random users join</Text>
             <Switch

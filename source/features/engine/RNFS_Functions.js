@@ -2,6 +2,7 @@ import {Platform} from 'react-native';
 import RNFS from 'react-native-fs';
 import {formatBytes, seperateExt} from '../../utilis/Functions';
 import {PermissionsAndroid} from 'react-native';
+
 const confirmSpace = async fileSize => {
   const space = await RNFS.getFSInfo();
   if (space.freeSpace > fileSize) {

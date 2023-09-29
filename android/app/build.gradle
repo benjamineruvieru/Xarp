@@ -138,7 +138,7 @@ compileOptions {
 	targetCompatibility JavaVersion.VERSION_1_8
 }
     defaultConfig {
-        applicationId "com.xarpspaces"
+        applicationId "com.xarpspaces.android"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 2

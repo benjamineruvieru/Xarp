@@ -1,4 +1,4 @@
-package com.xarpspaces.newarchitecture.components;
+package com.xarpspaces.android.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;
@@ -19,7 +19,8 @@ public class MainComponentsRegistry {
     SoLoader.loadLibrary("fabricjni");
   }
 
-  @DoNotStrip private final HybridData mHybridData;
+  @DoNotStrip
+  private final HybridData mHybridData;
 
   @DoNotStrip
   private native HybridData initHybrid(ComponentFactory componentFactory);
@@ -30,7 +31,9 @@ public class MainComponentsRegistry {
   }
 
   @DoNotStrip
-  public static MainComponentsRegistry register(ComponentFactory componentFactory) {
+  public static MainComponentsRegistry register(
+    ComponentFactory componentFactory
+  ) {
     return new MainComponentsRegistry(componentFactory);
   }
 }
