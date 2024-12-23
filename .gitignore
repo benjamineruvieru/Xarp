@@ -65,3 +65,4 @@ buck-out/
 android/app/google-services.json
 GoogleService-Info.plist
 editted_packages
+.yarn
