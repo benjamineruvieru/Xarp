@@ -1,0 +1,118 @@
+{
+  "project_info": {
+    "project_number": "628910851337",
+    "project_id": "xarp-spaces",
+    "storage_bucket": "xarp-spaces.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628910851337:android:f540b8a9ea0d6c435ebfd8",
+        "android_client_info": {
+          "package_name": "com.xarpspaces"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628910851337-6qkn0s11161hgbisp8qnabkpgh7aarkv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGuAd_RzPZFAXE8WBaeMB4qnoc9Y0ddG0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628910851337-6qkn0s11161hgbisp8qnabkpgh7aarkv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "628910851337-4h7cdvv3e3jvlp6rc5e1lmk98baosb5k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.xarpspaces"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628910851337:android:18630f820fe527615ebfd8",
+        "android_client_info": {
+          "package_name": "com.xarpspaces.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628910851337-6qkn0s11161hgbisp8qnabkpgh7aarkv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGuAd_RzPZFAXE8WBaeMB4qnoc9Y0ddG0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628910851337-6qkn0s11161hgbisp8qnabkpgh7aarkv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "628910851337-4h7cdvv3e3jvlp6rc5e1lmk98baosb5k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.xarpspaces"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628910851337:android:3fae76dd6c378e6d5ebfd8",
+        "android_client_info": {
+          "package_name": "com.zarpspaces"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628910851337-6qkn0s11161hgbisp8qnabkpgh7aarkv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGuAd_RzPZFAXE8WBaeMB4qnoc9Y0ddG0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628910851337-6qkn0s11161hgbisp8qnabkpgh7aarkv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "628910851337-4h7cdvv3e3jvlp6rc5e1lmk98baosb5k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.xarpspaces"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
