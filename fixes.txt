@@ -1,4 +1,0 @@
-Android build issue:
-Refer: https://stackoverflow.com/questions/58395512/react-native-on-android-unable-to-determine-the-current-character-it-is-not-a
-Solution
-Run npx --quiet react-native config and add package name to manifest file throwing error
